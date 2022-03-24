@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  background-color: rgb(58, 58, 58);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: wheat;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+@font-face {
+  font-family: "empikProBold";
+  src: URL("./fonts/empikProBold.ttf") format("truetype");
+}
+
+/* @font-face {
+  font-family: 'empikProRegular';
+  src: URL('./fonts/empikProRegular.ttf') format('truetype');
+  }
+   */
