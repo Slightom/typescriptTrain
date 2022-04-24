@@ -25,7 +25,7 @@ const Navbar = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", changeNav);
-    window.addEventListener("resize", updateNavbarHeightDebounced);
+    window.addEventListener("resize", updateNavbarHeight);
 
     // return (() => {
     //   window.removeEventListener("scroll");

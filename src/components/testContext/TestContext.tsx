@@ -31,11 +31,14 @@ const TestContext = () => {
             </Grid>
 
             <Grid item>
+                {appBarHeight && <ListWithScroll height={appBarHeight} />}
+            </Grid>
+            {/* <Grid item>
                 <ColourfulRectangleWithText color={mainColor} text='mainColor' />
             </Grid>
             <Grid item>
                 <ColourfulRectangleWithText color={secondColor} text='secondColor' />
-            </Grid>
+            </Grid> */}
         </Grid>
 
     );
@@ -67,5 +70,27 @@ const ColourfulRectangleWithText = ({ color, text }: ColourfulRectangleWithTextP
         <ColourfulRectangle color={color}>
             <p>{text}</p>
         </ColourfulRectangle>
+    )
+}
+
+const generateContent = () => Array.from({ length: 100 }, (v, i) => <p id={i.toString()}>dupa dupa</p>);
+
+
+interface OverflowDivProps extends ListWithScrollProps { }
+
+const OverflowDiv = styled.div<OverflowDivProps>`
+    max-height: calc(100vh - ${props => `${props.height}px`});
+    overflow-y: auto;
+`
+
+interface ListWithScrollProps {
+    height: number;
+}
+
+const ListWithScroll = ({ height }: ListWithScrollProps) => {
+    return (
+        <OverflowDiv height={height}>
+            {generateContent()}
+        </OverflowDiv>
     )
 }
