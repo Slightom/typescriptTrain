@@ -1,26 +1,45 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { debounce } from "lodash";
+import { useElementsHeightsContext } from "../../contexts/ElementsHeightsContext";
 
 const Navbar = () => {
+  const { appBarHeight, setState } = useElementsHeightsContext();
   const [scrollNav, setScrollNav] = useState(false);
+  const ref = useRef();
 
   const changeNav = () => {
     window.scrollY >= 80 ? setScrollNav(true) : setScrollNav(false);
   };
 
+  const updateNavbarHeight = () => {
+    setState(prev => { return { ...prev.state, appBarHeight: ref?.current.clientHeight } });
+  }
+
+  const updateNavbarHeightDebounced = debounce(updateNavbarHeight, 100);
+
   useEffect(() => {
     window.addEventListener("scroll", changeNav);
+    window.addEventListener("resize", updateNavbarHeightDebounced);
+
+    // return (() => {
+    //   window.removeEventListener("scroll");
+    //   window.removeEventListener("resize");
+    // }, [])
   }, []);
 
+  useEffect(() => {
+    updateNavbarHeight();
+  }, [ref])
+
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} ref={ref}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -55,7 +74,12 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink to="/useref" activeClassName="active">
-                counter
+                useRef
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/context" activeClassName="active">
+                context
               </NavLink>
             </li>
           </ul>
